@@ -1,8 +1,8 @@
 package lexer
 
 import (
-	"github.com/imajaygiri/ajay/helper"
-	"github.com/imajaygiri/ajay/internal/utils"
+	"github.com/imajaygiri/compiler/helper"
+	"github.com/imajaygiri/compiler/internal/utils"
 )
 
 type Lexer struct {
