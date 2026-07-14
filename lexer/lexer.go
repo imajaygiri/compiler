@@ -1,8 +1,7 @@
 package lexer
 
 import (
-	"github.com/imajaygiri/compiler/helper"
-	"github.com/imajaygiri/compiler/internal/utils"
+	"github.com/imajaygiri/compiler/utils"
 )
 
 type Lexer struct {
@@ -44,7 +43,7 @@ func (l *Lexer) Advance() byte {
 		utils.Panic("cursor is at EOF, can not Advance.")
 	}
 
-	if helper.IsNewLine(l.Cursor()) {
+	if IsNewLine(l.Cursor()) {
 		l.Line++
 		l.Col = 0
 	} else {
@@ -60,7 +59,7 @@ func handleNumber(l *Lexer, ch byte) {
 	numByte = append(numByte, ch)
 
 	col := l.Col
-	for !l.IsEof() && helper.IsDigit(l.Cursor()) {
+	for !l.IsEof() && IsDigit(l.Cursor()) {
 		numByte = append(numByte, l.Advance())
 	}
 	l.tokens = append(l.tokens, Token{
@@ -76,7 +75,7 @@ func handleIdentifier(l *Lexer, ch byte) {
 	value := make([]byte, 0)
 	value = append(value, ch)
 	col := l.Col
-	for !l.IsEof() && (helper.IsAlphaNum(l.Cursor()) || l.Cursor() == '_') {
+	for !l.IsEof() && (IsAlphaNum(l.Cursor()) || l.Cursor() == '_') {
 		value = append(value, l.Advance())
 	}
 
@@ -123,12 +122,12 @@ func Tokenize(source string, filename string) []Token {
 		ch := lexer.Advance()
 
 		switch {
-		case helper.IsWhiteSpace(ch):
+		case IsWhiteSpace(ch):
 			continue
-		case helper.IsDigit(ch):
+		case IsDigit(ch):
 			// handlerNumber
 			handleNumber(lexer, ch)
-		case helper.IsAlpha(ch) || ch == '_':
+		case IsAlpha(ch) || ch == '_':
 			handleIdentifier(lexer, ch)
 
 		case ch == '"' || ch == '\'' || ch == '`':
@@ -374,7 +373,7 @@ func Tokenize(source string, filename string) []Token {
 		case ch == '/':
 			if !lexer.IsEof() && lexer.Cursor() == '/' {
 				lexer.Advance() // consume second '/'
-				for !lexer.IsEof() && !helper.IsNewLine(lexer.Cursor()) {
+				for !lexer.IsEof() && !IsNewLine(lexer.Cursor()) {
 					lexer.Advance()
 				}
 				continue

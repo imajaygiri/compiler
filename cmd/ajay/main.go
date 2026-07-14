@@ -3,8 +3,8 @@ package main
 import (
 	"fmt"
 
-	"github.com/imajaygiri/compiler/internal/lexer"
-	"github.com/imajaygiri/compiler/internal/utils"
+	"github.com/imajaygiri/compiler/lexer"
+	"github.com/imajaygiri/compiler/utils"
 	"os"
 )
 
