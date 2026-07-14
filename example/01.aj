@@ -1,10 +1,7 @@
-let name = "Ajay";
-10 == 10
-20 >= 30
-20 <= 40
-[] () {}
-> < ! !=
-$ # @ ~ ^
-"double quote string"
-'single quote string'
-`backtick string`
+// this is line comment
+let x = 10 // comment at line end
+/* this is
+a multi-line block comment
+*/
+let y = 20 /* comment inside */ + 30
+@

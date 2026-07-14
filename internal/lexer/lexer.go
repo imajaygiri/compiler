@@ -121,6 +121,7 @@ func Tokenize(source string, filename string) []Token {
 
 	for !lexer.IsEof() {
 		ch := lexer.Advance()
+
 		switch {
 		case helper.IsWhiteSpace(ch):
 			continue
@@ -369,8 +370,29 @@ func Tokenize(source string, filename string) []Token {
 				Value: string(ch),
 			})
 
+			// slash group and comments impl
 		case ch == '/':
-			if !lexer.IsEof() && lexer.Cursor() == '=' {
+			if !lexer.IsEof() && lexer.Cursor() == '/' {
+				lexer.Advance() // consume second '/'
+				for !lexer.IsEof() && !helper.IsNewLine(lexer.Cursor()) {
+					lexer.Advance()
+				}
+				continue
+			} else if !lexer.IsEof() && lexer.Cursor() == '*' {
+				lexer.Advance() // consume '*'
+				for !lexer.IsEof() {
+					if lexer.Cursor() == '*' {
+						lexer.Advance()
+						if !lexer.IsEof() && lexer.Cursor() == '/' {
+							lexer.Advance()
+							break
+						}
+					} else {
+						lexer.Advance()
+					}
+				}
+				continue
+			} else if !lexer.IsEof() && lexer.Cursor() == '=' {
 				col := lexer.Col
 				lexer.Advance()
 				lexer.tokens = append(lexer.tokens, Token{
