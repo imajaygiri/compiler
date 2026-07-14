@@ -15,7 +15,7 @@ func main() {
 	}
 
 	fmt.Println(string(source))
-	tokens := lexer.Parse(string(source), "01.aj")
+	tokens := lexer.Tokenize(string(source), "01.aj")
 	for _, t := range tokens {
 		t.Debug()
 	}

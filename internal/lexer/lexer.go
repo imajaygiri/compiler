@@ -116,7 +116,7 @@ func handlerString(l *Lexer, quote byte) {
 	})
 }
 
-func Parse(source string, filename string) []Token {
+func Tokenize(source string, filename string) []Token {
 	lexer := New(source, filename)
 
 	for !lexer.IsEof() {
